@@ -1,8 +1,13 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import NavBar from './elemnts/NavBar'
 
 function DefaultLayout() {
   return (
-    <div>DefaultLayout</div>
+    <div className='container my-auto p-6 bg-sky-900'>
+      <NavBar/>
+      <Outlet/>
+    </div>
   )
 }
 
