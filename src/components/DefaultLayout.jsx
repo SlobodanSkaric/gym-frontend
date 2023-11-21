@@ -4,7 +4,7 @@ import NavBar from './elemnts/NavBar'
 
 function DefaultLayout() {
   return (
-    <div className='container my-auto p-6 bg-sky-900'>
+    <div className=' w-full mx-auto my-auto p-6 bg-sky-900'>
       <NavBar/>
       <Outlet/>
     </div>
