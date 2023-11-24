@@ -4,31 +4,40 @@ import VisitorLayout from "./components/VisitorLayout";
 import UserLayout from "./components/UserLayout";
 import CoachLayout from "./components/CoachLayout";
 import AdministratorLayout from "./components/AdministratorLayout";
+import HomeLayout from "./components/HomeLayout";
 
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/gym",
         element: <DefaultLayout/>,
         children:[
             {
-                path: "/visitor",
-                element: <VisitorLayout/>
-            },
-            {
-                path: "/user",
+                path: "user",
                 element: <UserLayout/>
             },
             {
-                path: "/coach",
+                path: "coach",
                 element: <CoachLayout/>
             },
             {
-                path: "/admin",
+                path: "admin",
                 element: <AdministratorLayout/>
             }
-        ]
+        ],
+        
+        
     },
+    {
+        path: "/",
+        element: <HomeLayout/>,
+        children: [
+           { 
+                path: "/",
+                element: <VisitorLayout/>
+            }
+        ]
+    }
     
 ]);
 
