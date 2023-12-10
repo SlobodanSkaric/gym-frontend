@@ -5,6 +5,8 @@ import UserLayout from "./components/UserLayout";
 import CoachLayout from "./components/CoachLayout";
 import AdministratorLayout from "./components/AdministratorLayout";
 import HomeLayout from "./components/HomeLayout";
+import UserLogin from "./components/elemnts/User/UserLogin";
+import UserRegistration from "./components/elemnts/User/UserRegistration";
 
 
 const router = createBrowserRouter([
@@ -15,7 +17,6 @@ const router = createBrowserRouter([
             {
                 path: "user",
                 element: <UserLayout/>
-                ch
             },
             {
                 path: "coach",
@@ -38,8 +39,15 @@ const router = createBrowserRouter([
                 element: <VisitorLayout/>
             }
         ]
+    },
+    {
+        path:"/login/user",
+        element: <UserLogin/>        
+    },
+    {
+        path:"/registration/user",
+        element: <UserRegistration/>
     }
-    
 ]);
 
 export default router;
