@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { UseCurentUser } from '../context/userContext'
 
 function UserLayout() {
+  const {userId,name, lastname, emailcon} = UseCurentUser();
+
+  
   return (
     <div className="flex sm:flex-row flex-col p-3">
       <div className='basis-1/12 text-center'>
@@ -10,7 +14,10 @@ function UserLayout() {
           </div>
           <div className='flex flex-col sm:flex-row items-center justify-around'>
             <div className='text-red-100 sm:text-base text-sm'>
-              Semple User
+              {username ? ( username ) : ("Semple user default")} <br />
+              {userId ? ( userId ) : ("Semple user default")} <br />
+              {lastname ? ( lastname ) : ("Semple user default")} <br />
+              {emailcon ? ( emailcon ) : ("Semple user default")} <br />
             </div>
             <div className='bg-red-600 rounded-full w-[10px] h-[10px]'></div>
           </div>
@@ -21,7 +28,7 @@ function UserLayout() {
         <div className='text-red-100 sm:text-2xl pb-3'>Coache List</div>
           <ul className='sm:text-base text-sm bg-sky-800 w-36 pb-3 pt-3 text-red-100'>
             <li className='pb-1 pt-1 border-b-2'>Cocahe1</li>
-            <li>Cocahe2</li>
+            <li>Coach2</li>
             <li>Cocahe3</li>
             <li>Cocahe4</li>
             <li>Cocahe5</li>

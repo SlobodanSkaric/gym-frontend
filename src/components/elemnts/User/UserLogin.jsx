@@ -1,9 +1,20 @@
 import React, { useState } from 'react'
 import axiosInstance from '../../../axios'
+import {  UseCurentUser } from '../../../context/userContext';
+import { Navigate, useNavigate } from "react-router-dom"
+import UserLayout from '../../UserLayout';
 
 function UserLogin() {
+  const {setUserId,setName,setLastname,setEmailCon,setApiToken} = UseCurentUser();
+  const [nameApi, setNameApi] = useState();
+  const [lastnameApi, setLastnameApi] = useState();
+  const [emaiApi, setEmailApi] = useState();
+  const [token, setTokenApi] = useState();
+
   const [email, setEmal]        = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const userDataLogin = (ev) => {
     ev.preventDefault();
@@ -11,10 +22,14 @@ function UserLogin() {
     axiosInstance.post("/login/user" ,{
       email: email,
       password: password
-    }).then((data) =>{
-      console.log(data);
+    }).then(({data}) =>{
+      setUserId(data[0].id)
+      setName(data[0].name);
+      setLastname(data[0].lastname);
+      setEmailCon(data[0].email);
+      navigate("/gym/user");
     }).catch((error) =>{
-      console.log(error);
+      console.log("Some error " + error);
     })
   }
   
