@@ -5,11 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import UserLayout from '../../UserLayout';
 
 function UserLogin() {
-  const {setUserId,setName,setLastname,setEmailCon,setApiToken} = UseCurentUser();
-  const [nameApi, setNameApi] = useState();
-  const [lastnameApi, setLastnameApi] = useState();
-  const [emaiApi, setEmailApi] = useState();
-  const [token, setTokenApi] = useState();
+  const {userId,setUserId,setApiToken} = UseCurentUser();
 
   const [email, setEmal]        = useState("");
   const [password, setPassword] = useState("");
@@ -23,10 +19,10 @@ function UserLogin() {
       email: email,
       password: password
     }).then(({data}) =>{
-      setUserId(data[0].id)
-      setName(data[0].name);
-      setLastname(data[0].lastname);
-      setEmailCon(data[0].email);
+      localStorage.setItem("USER_ID", data[0].id);
+      
+      setUserId(data[0].id);
+      setApiToken(data.token);
       navigate("/gym/user");
     }).catch((error) =>{
       console.log("Some error " + error);

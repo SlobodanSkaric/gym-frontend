@@ -1,9 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UseCurentUser } from '../context/userContext'
+import axiosInstance from '../axios';
 
 function UserLayout() {
-  const {userId,name, lastname, emailcon} = UseCurentUser();
-  
+  const {userId,token} = UseCurentUser();
+  const [usergetId, setUserGetId] = useState(userId != null ? userId : localStorage.getItem("USER_ID"))
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [status, setStatus] = useState(false);
+  const [coach, setCoach] = useState({});
+
+  useEffect(() => {
+    	axiosInstance.get("/users/"+ usergetId)
+      .then(({data}) => {
+        console.log(data.data.status);
+        setName(data.data.name);
+        setEmail(data.data.email);
+        setCoach(data.data.coach);
+        setUserGetId()
+        if(data.data.status){
+          setStatus(true);
+        }
+      }).catch(
+        (error) => {
+          console.log("Some error " + error)
+        });
+  }, [usergetId]);
+
   return (
     <div className="flex sm:flex-row flex-col p-3">
       <div className='basis-1/12 text-center'>
@@ -13,7 +36,7 @@ function UserLayout() {
           </div>
           <div className='flex flex-col sm:flex-row items-center justify-around'>
             <div className='text-red-100 sm:text-base text-sm'>
-              {name ? ( name ) : ("Semple user default")} <br />
+             {name ? ( name ) : ("Load...")} <br />
             </div>
             <div className='bg-red-600 rounded-full w-[10px] h-[10px]'></div>
           </div>
