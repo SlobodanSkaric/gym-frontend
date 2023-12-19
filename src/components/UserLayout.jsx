@@ -3,7 +3,6 @@ import { UseCurentUser } from '../context/userContext'
 
 function UserLayout() {
   const {userId,name, lastname, emailcon} = UseCurentUser();
-
   
   return (
     <div className="flex sm:flex-row flex-col p-3">
@@ -14,10 +13,7 @@ function UserLayout() {
           </div>
           <div className='flex flex-col sm:flex-row items-center justify-around'>
             <div className='text-red-100 sm:text-base text-sm'>
-              {username ? ( username ) : ("Semple user default")} <br />
-              {userId ? ( userId ) : ("Semple user default")} <br />
-              {lastname ? ( lastname ) : ("Semple user default")} <br />
-              {emailcon ? ( emailcon ) : ("Semple user default")} <br />
+              {name ? ( name ) : ("Semple user default")} <br />
             </div>
             <div className='bg-red-600 rounded-full w-[10px] h-[10px]'></div>
           </div>
