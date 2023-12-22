@@ -7,6 +7,7 @@ import AdministratorLayout from "./components/AdministratorLayout";
 import HomeLayout from "./components/HomeLayout";
 import UserLogin from "./components/elemnts/User/UserLogin";
 import UserRegistration from "./components/elemnts/User/UserRegistration";
+import UserProfileInit from "./components/elemnts/User/UserProfileInit";
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
             {
                 path: "user",
                 element: <UserLayout/>
+            },            
+            {
+                path: "userprofile",
+                element: <UserProfileInit/>
             },
             {
                 path: "coach",
@@ -25,7 +30,7 @@ const router = createBrowserRouter([
             {
                 path: "admin",
                 element: <AdministratorLayout/>
-            }
+            },
         ],
         
         
