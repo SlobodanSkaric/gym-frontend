@@ -10,8 +10,8 @@ function UserLayout() {
   const [name, setName]                       = useState();
   const [email, setEmail]                     = useState();
   const [status, setStatus]                   = useState();
-  const [coach, setCoach]                     = useState();
-  const [trainingProgram, setTrainingProgram] = useState();
+  const [coach, setCoach]                     = useState({});
+  const [trainingProgram, setTrainingProgram] = useState([{}]);
   const checkedRef = useRef(false);
 
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ function UserLayout() {
     const fetchdata = async () =>{
       try{
         const response = await axiosInstance.get("/users/"+ usergetId);
+        console.log(response.data.data.training);
         setName(response.data.data.name);
         setEmail(response.data.data.email);
         setStatus(response.data.data.status);
@@ -28,7 +29,7 @@ function UserLayout() {
 
         checkedRef.current = true;
       }catch(error){
-        console.log("Some error");
+        console.log("Some error: " + error);
       }
     }
 
@@ -37,7 +38,7 @@ function UserLayout() {
     if(checkedRef.current){
       checkRedirect();
     }
-  });
+  }, []);
 
   const checkRedirect = () =>{
     if(coach == undefined || trainingProgram == undefined){
@@ -48,6 +49,7 @@ function UserLayout() {
   return (
     <>
     <div className="flex sm:flex-row flex-col p-3">
+
       <div className='basis-1/12 text-center'>
         <div className='flex flex-col'>
           <div className='flex items-center justify-evenly '>
@@ -61,20 +63,23 @@ function UserLayout() {
           </div>
         </div>
       </div>
-      <div className='flex sm:flex-row flex-col justify-around items-center flex-1  pt-0'>
-        <div className='p-3 text-center flex flex-col items-center'>
-        <div className='text-red-100 sm:text-2xl pb-3'>Coache List</div>
-          <ul className='sm:text-base text-sm bg-sky-800 w-36 pb-3 pt-3 text-red-100'>
+      <div className='flex sm:flex-row flex-col justify-around  flex-1  pt-0 ml-6'>
+        <div className='p-3 text-center flex flex-col items-center sm:w-1/3'>
+        <div className='text-red-100 sm:text-2xl pb-3'>Your Coache</div>
+          <ul className='sm:text-base text-sm bg-sky-800  pb-3 pt-3 text-red-100 w-full h-full'>
+            {coach.name} 
           </ul>
         </div>
-        <div className='p-3 text-center flex flex-col items-center'>
-          <div className='text-red-100 sm:text-2xl pb-3' >Choose your program</div>
-            <ul className='sm:text-base text-sm bg-sky-800 w-36 pb-3 pt-3 text-red-100'>
+        <div className='p-3 text-center flex flex-col items-center sm:w-1/3'>
+          <div className='text-red-100 sm:text-2xl pb-3' >Your program</div>
+            <ul className='sm:text-base text-sm bg-sky-800 pb-3 pt-3 text-red-100 w-full h-full'>
+              {trainingProgram.map((value) => ( <li key={value.program_name}>{value.program_name}</li>))}
             </ul>
         </div>
-        <div className='p-3 text-center flex flex-col items-center'>
-          <div className='text-red-100 sm:text-2xl pb-3 '>Select your intensity</div>
-            <ul className='sm:text-base text-sm bg-sky-800 w-36 pb-3 pt-3 text-red-100'>
+        <div className='p-3 text-center flex flex-col items-center sm:w-1/3'>
+          <div className='text-red-100 sm:text-2xl pb-3 '>Your intensity</div>
+            <ul className='sm:text-base text-sm bg-sky-800 pb-3 pt-3 text-red-100 w-full h-full'>
+            {trainingProgram.map((value) => ( <li key={value.program_name}>{value.trening_weight}</li>))}
             </ul>
         </div>
       </div>

@@ -20,6 +20,7 @@ function UserLogin() {
       password: password
     }).then(({data}) =>{
       localStorage.setItem("USER_ID", data[0].id);
+      console.log(data.token);
       setApiToken(data.token);
       navigate("/gym/user");
     }).catch((error) =>{
