@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { UseCurentUser } from '../context/userContext'
 import axiosInstance from '../axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserProfileInit from './elemnts/User/UserProfileInit';
 
 function UserLayout() {
@@ -20,7 +20,6 @@ function UserLayout() {
     const fetchdata = async () =>{
       try{
         const response = await axiosInstance.get("/users/"+ usergetId);
-        console.log(response.data.data.training);
         setName(response.data.data.name);
         setEmail(response.data.data.email);
         setStatus(response.data.data.status);
@@ -57,7 +56,7 @@ function UserLayout() {
           </div>
           <div className='flex flex-col sm:flex-row items-center justify-around'>
             <div className='text-red-100 sm:text-base text-sm'>
-             {name ? ( name ) : ("Load...")} <br />
+             <Link to="/gym/userprofile">{name ? ( name ) : ("Load...")} <br /></Link>             
             </div>
             { status ? <div className='bg-green-600 rounded-full w-[10px] h-[10px]'></div> : <div className='bg-red-600 rounded-full w-[10px] h-[10px]'></div>}
           </div>
