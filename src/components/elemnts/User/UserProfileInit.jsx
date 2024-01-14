@@ -11,21 +11,27 @@ function UserProfileInit() {
   const [email, setEmail]         = useState();
   const [status, setStatus]       = useState();
   const [coachs, setCoachs]       = useState([]);
-  const [programs, setProgrmas]   = useState();
+  const [programs, setProgrmas]   = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const responseUser = await axiosInstance.get("/users/" + usergetId);
-        const prepData = responseUser.data.data;
+        const responseUser      = await axiosInstance.get("/users/" + usergetId);
+        const responseCoach     = await axiosInstance.get("/coach");
+        const responseTraining  = await axiosInstance.get("/trening_program");
 
-        setName(prepData.name);
-        setLastname(prepData.lastname);
-        setEmail(prepData.email);
-        setStatus(prepData.status);
+        const prepUserData      = responseUser.data.data;
+        const prepCoacheData    = responseCoach.data;
+        const prepTraninigData  = responseTraining.data;
 
-        const responseCoach = await axiosInstance.get("/coach");
-        setCoachs(responseCoach.data.coach);
+        setName(prepUserData.name);
+        setLastname(prepUserData.lastname);
+        setEmail(prepUserData.email);
+        setStatus(prepUserData.status);
+
+        setCoachs(prepCoacheData.coach);
+       
+        setProgrmas(prepTraninigData.trening_program);
       }catch(e){
         console.log("Some error ...");
       }
@@ -39,10 +45,13 @@ function UserProfileInit() {
   return (
     <>
       <div className='text-center text-cyan-100 text-xl'>{name} {lastname}</div>
-      <div className='flex flex-col sm:flex-row pt-10'>
-        <div className='p-6 text-cyan-100'>
+      <div className='flex flex-col sm:flex-row pt-10 justify-between '>
+        <div className='p-6 text-cyan-100 sm:h-auto h-60 flex-1'>
           <p className='text-center'>User Information</p>
-          <div className='flex flex-col mt-6 p-6 bg-sky-800'>
+          <div className='flex flex-col mt-6 p-6 bg-sky-800 text-cyan-100 sm:h-full '>
+            <div>
+              <img src="../src/assets/img/user.jpg" alt="profile pic" className='rounded-full w-[100px] h-[100px]' />
+            </div>
             <div>
               Name: {name}
             </div>
@@ -57,12 +66,19 @@ function UserProfileInit() {
             </div>
           </div>
         </div>
-        <div className='p-6 sm:ml-6'>
+        <div className='p-6 sm:ml-6 flex-1'>
           <p className='text-cyan-100 text-center mb-6'>Coach</p>
-          <div className='mt-6 bg-sky-800 p-6 text-cyan-100 w'>
+          <div className='mt-6 bg-sky-800 p-6 text-cyan-100  sm:h-full '>
             <ul>
               {coachs.length === 0 ? "loading..." : coachs.map((value) => (<li key={value.id}><input type='checkbox' className='mr-1'></input>{value.name}</li>))}
-              {} 
+            </ul>
+          </div>
+        </div>
+        <div className='p-6 sm:ml-6 flex-1'>
+          <p className='text-cyan-100 text-center mb-6'>Programs</p>
+          <div className='mt-6 bg-sky-800 p-6 text-cyan-100  sm:h-full '>
+            <ul>
+              {programs.length === 0 ? "loading..." : programs.map((value) => (<li key={value.id}><input type='checkbox' className='mr-1'></input>{value.program_name}</li>))}
             </ul>
           </div>
         </div>
