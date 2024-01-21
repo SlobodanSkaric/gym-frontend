@@ -9,6 +9,8 @@ function UserProfileInit() {
   const [name, setName]           = useState();
   const [lastname, setLastname]   = useState();
   const [email, setEmail]         = useState();
+  const [userCocah, setUserCoach] = useState();
+  const [userTraining, setUserTraining] = useState([]);
   const [status, setStatus]       = useState();
   const [coachs, setCoachs]       = useState([]);
   const [programs, setProgrmas]   = useState([]);
@@ -28,22 +30,26 @@ function UserProfileInit() {
         setLastname(prepUserData.lastname);
         setEmail(prepUserData.email);
         setStatus(prepUserData.status);
+        setUserCoach(responseUser.data.data.coach.id);        
+        setUserTraining(prepUserData.training);
 
         setCoachs(prepCoacheData.coach);
-       
+        
         setProgrmas(prepTraninigData.trening_program);
       }catch(e){
         console.log("Some error ...");
       }
     }
+    
 
     fetchData();
    
   }, []);
-
   
   return (
+   
     <>
+     
       <div className='text-center text-cyan-100 text-xl'>{name} {lastname}</div>
       <div className='flex flex-col sm:flex-row pt-10 justify-between '>
         <div className='p-6 text-cyan-100 sm:h-auto h-60 flex-1'>
@@ -70,7 +76,7 @@ function UserProfileInit() {
           <p className='text-cyan-100 text-center mb-6'>Coach</p>
           <div className='mt-6 bg-sky-800 p-6 text-cyan-100  sm:h-full '>
             <ul>
-              {coachs.length === 0 ? "loading..." : coachs.map((value) => (<li key={value.id}><input type='checkbox' className='mr-1'></input>{value.name}</li>))}
+              {coachs.length === 0 ? "loading..." : coachs.map((value) => (<li key={value.id}><input type='checkbox' checked={value.id == userCocah ? "checked" : ""} className='mr-1'></input>{value.name}</li>))}
             </ul>
           </div>
         </div>
@@ -78,7 +84,7 @@ function UserProfileInit() {
           <p className='text-cyan-100 text-center mb-6'>Programs</p>
           <div className='mt-6 bg-sky-800 p-6 text-cyan-100  sm:h-full '>
             <ul>
-              {programs.length === 0 ? "loading..." : programs.map((value) => (<li key={value.id}><input type='checkbox' className='mr-1'></input>{value.program_name}</li>))}
+              {programs.length === 0 ? "loading..." : programs.map((value) => (<li key={value.id}><input type='checkbox' checked={userTraining.some(data => data.id == value.id) ? "checked" : "" } className='mr-1'></input>{value.program_name}</li>))}
             </ul>
           </div>
         </div>
