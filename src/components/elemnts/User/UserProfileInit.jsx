@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { UseCurentUser } from '../../../context/userContext'
 import axios from 'axios';
 import axiosInstance from '../../../axios';
+import Modal from "react-modal";
+
+const customPymentStyle = {
+  content : {
+    top: "10%",
+    left: "30%",
+    right: "30%",
+    padding: "100px"
+  }
+}
 
 function UserProfileInit() {
   const {userId}                  = UseCurentUser();
@@ -14,6 +24,15 @@ function UserProfileInit() {
   const [status, setStatus]       = useState();
   const [coachs, setCoachs]       = useState([]);
   const [programs, setProgrmas]   = useState([]);
+  const [paymentModal, setPaymentModal] = useState(false);
+
+  const openPaymentModal = () => {
+    setPaymentModal(true);
+  }
+
+  const closePaymetModal = () => {
+    setPaymentModal(false);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +87,35 @@ function UserProfileInit() {
               Email: {email}
             </div>
             <div>
-              Payment: { status ? "Is upadate" : "Please pay"}
+              Payment: { status ? "Is upadate" : <button onClick={openPaymentModal}>Payment</button>}
+              <Modal 
+                isOpen={paymentModal} 
+                onRequestClose={closePaymetModal}
+                style={customPymentStyle}
+                >
+                  <div className='text-center text-3xl'>
+                    Paymet
+                  </div>
+                  <div className='py-6 flex flex-col gap-6 '>
+                    <div>
+                      <input type="text" placeholder='First Name' className='border-2 border-slate-600 w-full py-3 px-2'/>
+                    </div>
+                    <div>
+                      <input type="text" name="" placeholder='Last Name' className='border-2 border-slate-600 w-full py-3 px-2'/>
+                    </div>
+                    <div>
+                      <input type="text" placeholder='Card Number' className='border-2 border-slate-600 w-full py-3 px-2'/>
+                    </div>
+                  </div>
+                  <div className='flex flex-row justify-around'>
+                    <div>
+                      <button className='bg-slate-600 text-gray-100 px-10 py-3'>Pay</button>
+                    </div>
+                    <div>
+                      <button onClick={closePaymetModal} className='bg-slate-600 text-gray-100 px-10 py-3'>Close</button>
+                    </div>
+                  </div>
+                </Modal>
             </div>
           </div>
         </div>
