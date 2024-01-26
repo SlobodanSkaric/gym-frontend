@@ -25,6 +25,7 @@ function UserProfileInit() {
   const [coachs, setCoachs]       = useState([]);
   const [programs, setProgrmas]   = useState([]);
   const [paymentModal, setPaymentModal] = useState(false);
+  const [messagesModal, setMessagesModal] = useState(false);
 
   const openPaymentModal = () => {
     setPaymentModal(true);
@@ -33,6 +34,15 @@ function UserProfileInit() {
   const closePaymetModal = () => {
     setPaymentModal(false);
   }
+
+  const openMessagesModal = () => {
+    setMessagesModal(true);
+  }
+
+  const closeMessageModal = () => {
+    setMessagesModal(false);
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,8 +96,15 @@ function UserProfileInit() {
             <div>
               Email: {email}
             </div>
-            <div>
-              Payment: { status ? "Is upadate" : <button onClick={openPaymentModal}>Payment</button>}
+            <div className='mt-6 mb-6'>
+              <div className='flex flex-row'>
+                <div>
+                Payment: 
+                </div>
+                <div className={`text-${status ? 'green-300' : ''} pl-3`}>
+                  { status ? "Is upadate" : <button onClick={openPaymentModal} className='bg-slate-100 text-red-600 px-2 py-1 rounded-lg'>Payment</button>}
+                </div>
+              </div>
               <Modal 
                 isOpen={paymentModal} 
                 onRequestClose={closePaymetModal}
@@ -98,24 +115,48 @@ function UserProfileInit() {
                   </div>
                   <div className='py-6 flex flex-col gap-6 '>
                     <div>
-                      <input type="text" placeholder='First Name' className='border-2 border-slate-600 w-full py-3 px-2'/>
+                      <input type="text" placeholder='First Name' className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'/>
                     </div>
                     <div>
-                      <input type="text" name="" placeholder='Last Name' className='border-2 border-slate-600 w-full py-3 px-2'/>
+                      <input type="text" name="" placeholder='Last Name' className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'/>
                     </div>
                     <div>
-                      <input type="text" placeholder='Card Number' className='border-2 border-slate-600 w-full py-3 px-2'/>
+                      <input type="text" placeholder='Card Number' className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'/>
                     </div>
                   </div>
                   <div className='flex flex-row justify-around'>
                     <div>
-                      <button className='bg-slate-600 text-gray-100 px-10 py-3'>Pay</button>
+                      <button className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md'>Pay</button>
                     </div>
                     <div>
-                      <button onClick={closePaymetModal} className='bg-slate-600 text-gray-100 px-10 py-3'>Close</button>
+                      <button onClick={closePaymetModal} className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md'>Close</button>
                     </div>
                   </div>
                 </Modal>
+            </div>
+            <div className='mt-3'>
+              <div>
+                <button className='bg-slate-100 px-6 py-2 text-black rounded-md' onClick={openMessagesModal}>Messages</button>
+                <Modal
+                  isOpen={messagesModal}
+                  onRequestClose={closeMessageModal}
+                  style={customPymentStyle}
+                >
+                  <div className='flex flex-col'>
+                    <div className='mb-3 '>
+                      <textarea name="" id="" cols="30" rows="10" className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'></textarea>
+                    </div>
+                    <div className='flex flex-row justify-around'>
+                      <div>
+                        <button className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md'>Send Message</button>
+                      </div>
+                      <div>
+                        <button onClick={closeMessageModal} className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md'>Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
             </div>
           </div>
         </div>
