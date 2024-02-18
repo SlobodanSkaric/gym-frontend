@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { UseCurentUser } from '../../../context/userContext'
 import axios from 'axios';
 import axiosInstance from '../../../axios';
@@ -26,6 +26,7 @@ function UserProfileInit() {
   const [programs, setProgrmas]   = useState([]);
   const [paymentModal, setPaymentModal] = useState(false);
   const [messagesModal, setMessagesModal] = useState(false);
+  const messageRef = useRef(null);
 
   const openPaymentModal = () => {
     setPaymentModal(true);
@@ -41,6 +42,12 @@ function UserProfileInit() {
 
   const closeMessageModal = () => {
     setMessagesModal(false);
+  }
+
+  const sendMessage = () => {//TODO send message for backend
+    const prepareMessage = messageRef.current.value;
+
+    console.log(prepareMessage);
   }
 
 
@@ -143,17 +150,17 @@ function UserProfileInit() {
                   style={customPymentStyle}
                 >
                   <div className='flex flex-col'>
-                    <div className='my-3'>
-                      <select name="coach_val" id="coach">
+                    <div className='my-3 flex-row'>
+                      <select name="coach_val" id="coach" className='text-center w-full py-1 bg-slate-600 text-gray-100 hover:bg-white hover:text-slate-600'>
                         { coachs.map((value_coach) => (<option value={value_coach.id}>{value_coach.name} {value_coach.lastname}</option>))}
                       </select>
                     </div>
                     <div className='mb-3 '>
-                      <textarea name="" id="" cols="30" rows="10" className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'></textarea>
+                      <textarea ref={messageRef}  name="" id="" cols="30" rows="10" className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'></textarea>
                     </div>
                     <div className='flex flex-row justify-around'>
                       <div>
-                        <button className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md'>Send Message</button>
+                        <button className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md' onClick={sendMessage}>Send Message</button>
                       </div>
                       <div>
                         <button onClick={closeMessageModal} className='bg-slate-600 text-gray-100 px-10 py-3 rounded-md'>Close</button>
