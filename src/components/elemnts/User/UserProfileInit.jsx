@@ -143,6 +143,11 @@ function UserProfileInit() {
                   style={customPymentStyle}
                 >
                   <div className='flex flex-col'>
+                    <div className='my-3'>
+                      <select name="coach_val" id="coach">
+                        { coachs.map((value_coach) => (<option value={value_coach.id}>{value_coach.name} {value_coach.lastname}</option>))}
+                      </select>
+                    </div>
                     <div className='mb-3 '>
                       <textarea name="" id="" cols="30" rows="10" className='border-2 border-slate-600 w-full py-3 px-2 rounded-md'></textarea>
                     </div>
